@@ -1,4 +1,4 @@
-package com.hamilton.proxibanque.entities;
+package com.hamilton.proxibanque.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,4 +27,13 @@ public class Client implements Serializable {
     @JoinColumn(name="Conseiller_Id")
     private Employe employe;
 
+    public Client(Long id, String nom, String prenom, String adresse, int codePostal, String ville, String telephone) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse = adresse;
+        this.codePostal = codePostal;
+        Ville = ville;
+        this.telephone = telephone;
+    }
 }

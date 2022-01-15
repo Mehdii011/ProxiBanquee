@@ -1,4 +1,4 @@
-package com.hamilton.proxibanque.entities;
+package com.hamilton.proxibanque.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +13,8 @@ public class CompteCourant extends Compte{
 
     private double decouvert;
 
-    public CompteCourant(Long id, String numeroCompte, double solde, Date dateCreation, Client client, double decouvert) {
-        super(id, numeroCompte, solde, dateCreation, client);
+    public CompteCourant(String numeroCompte, double solde, Date dateCreation, Client client, double decouvert) {
+        super(numeroCompte, solde, dateCreation, client);
         this.decouvert = decouvert;
     }
 }

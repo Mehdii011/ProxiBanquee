@@ -1,4 +1,4 @@
-package com.hamilton.proxibanque.entities;
+package com.hamilton.proxibanque.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,8 +12,8 @@ import java.util.Date;
 public class CompteEpargne extends Compte{
     private double taux;
 
-    public CompteEpargne(Long id, String numeroCompte, double solde, Date dateCreation, Client client, double taux) {
-        super(id, numeroCompte, solde, dateCreation, client);
+    public CompteEpargne(String numeroCompte, double solde, Date dateCreation, Client client, double taux) {
+        super(numeroCompte, solde, dateCreation, client);
         this.taux = taux;
     }
 }

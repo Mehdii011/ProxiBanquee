@@ -1,4 +1,4 @@
-package com.hamilton.proxibanque.entities;
+package com.hamilton.proxibanque.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,10 +11,10 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "Type_Carte",discriminatorType = DiscriminatorType.STRING)
 @Data @AllArgsConstructor @NoArgsConstructor
-public class Carte implements Serializable {
+public abstract class Carte implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long numerCarte;
+    private long numeroCarte;
     private int CodeSecret;
     private Date dateExpiration;
     @ManyToOne

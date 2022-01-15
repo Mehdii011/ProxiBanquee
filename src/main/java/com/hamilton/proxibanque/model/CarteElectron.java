@@ -1,4 +1,4 @@
-package com.hamilton.proxibanque.entities;
+package com.hamilton.proxibanque.model;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

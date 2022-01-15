@@ -1,4 +1,4 @@
-package com.hamilton.proxibanque.entities;
+package com.hamilton.proxibanque.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +12,7 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TypeOperation",discriminatorType = DiscriminatorType.STRING)
 @Data @AllArgsConstructor @NoArgsConstructor
-public class Operation implements Serializable {
+public abstract class Operation implements Serializable {
 @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idOperation;
     private Date dateOperation;
