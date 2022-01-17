@@ -29,7 +29,7 @@ public class ConseillerServiceImpl implements ConseillerService {
 
     @Override
     public Conseiller getConseillerByEmail(String email) {
-        Conseiller conseiller = conseillerRepo.findByEmail(email);
+        Conseiller conseiller = (Conseiller) conseillerRepo.findByEmail(email);
         if (conseiller == null) return  null;
         return conseiller;
     }
