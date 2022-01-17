@@ -1,4 +1,4 @@
-package com.hamilton.proxibanque.controllers;
+package com.hamilton.proxibanque.controller;
 
 import com.hamilton.proxibanque.model.Conseiller;
 import com.hamilton.proxibanque.model.Employe;
