@@ -9,5 +9,5 @@ import org.springframework.data.repository.query.Param;
 
 public interface OperationRepository extends CrudRepository<Operation,Long> {
 @Query("select Op from Operation Op where Op.compte.numeroCompte=:cp order by Op.dateOperation desc ")
-    Page<Operation> operations(@Param("cp") String numCompte, Pageable pageable);
+    Page<Operation> operations(@Param("cp") Long numCompte, Pageable pageable);
 }

@@ -13,7 +13,7 @@ public class CompteCourant extends Compte{
 
     private double decouvert;
 
-    public CompteCourant(String numeroCompte, double solde, Date dateCreation, Client client, double decouvert) {
+    public CompteCourant(Long numeroCompte, double solde, Date dateCreation, Client client, double decouvert) {
         super(numeroCompte, solde, dateCreation, client);
         this.decouvert = decouvert;
     }

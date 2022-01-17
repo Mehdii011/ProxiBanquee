@@ -10,10 +10,10 @@ import java.util.Optional;
 
 public interface IBanqueService {
 
-    Optional<Compte> consulterCompte(String numCompte) throws CompteIntrouvable;
-    void crediter(String numCompte,double montant) throws CompteIntrouvable;
-    void debiter(String numCompte,double montant) throws DebitImpossibleException, CompteIntrouvable;
-    void virement(String numCompte1,String numCompte2,double montant) throws DebitImpossibleException, CompteIntrouvable;
-    Page<Operation> operations(String numCompte,int page, int size);
+    Optional<Compte> consulterCompte(Long numCompte) throws CompteIntrouvable;
+    void crediter(Long numCompte,double montant) throws CompteIntrouvable;
+    void debiter(Long numCompte,double montant) throws DebitImpossibleException, CompteIntrouvable;
+    void virement(Long numCompte1,Long numCompte2,double montant) throws DebitImpossibleException, CompteIntrouvable;
+    Page<Operation> operations(Long numCompte,int page, int size);
 
 }

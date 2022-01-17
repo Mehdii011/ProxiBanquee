@@ -23,14 +23,14 @@ public class BanqueServiceImpl implements IBanqueService {
     private CompteRepository compteRepository;
 
     @Override
-    public Optional<Compte> consulterCompte(String numCompte) throws CompteIntrouvable {
+    public Optional<Compte> consulterCompte(Long numCompte) throws CompteIntrouvable {
         Optional<Compte> compte =compteRepository.findById(numCompte);
         if (compte.isEmpty()) throw new CompteIntrouvable("Compte introuvable!!");
         return Optional.of(compte.get());
     }
 
     @Override
-    public void crediter(String numCompte, double montant) throws CompteIntrouvable {
+    public void crediter(Long numCompte, double montant) throws CompteIntrouvable {
         Optional<Compte> compte = consulterCompte(numCompte);
         Versement versement = new Versement(null, new Date(), montant, compte.get());
         operationRepository.save(versement);
@@ -40,7 +40,7 @@ public class BanqueServiceImpl implements IBanqueService {
     }
 
     @Override
-    public void debiter(String numCompte, double montant) throws DebitImpossibleException, CompteIntrouvable {
+    public void debiter(Long numCompte, double montant) throws DebitImpossibleException, CompteIntrouvable {
           Optional<Compte> compte = consulterCompte(numCompte);
         double creditCaisse = 0;
         if (compte.get() instanceof CompteCourant) creditCaisse = ((CompteCourant) compte.get()).getDecouvert();
@@ -52,14 +52,14 @@ public class BanqueServiceImpl implements IBanqueService {
     }
 
     @Override
-    public void virement(String numCompte1, String numCompte2, double montant) throws DebitImpossibleException, CompteIntrouvable {
+    public void virement(Long numCompte1, Long numCompte2, double montant) throws DebitImpossibleException, CompteIntrouvable {
         debiter(numCompte1, montant);
         crediter(numCompte2, montant);
 
     }
 
     @Override
-    public Page<Operation> operations(String numCompte, int page, int size) {
+    public Page<Operation> operations(Long numCompte, int page, int size) {
 
         return operationRepository.operations(numCompte, PageRequest.of(page, size));
     }

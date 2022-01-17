@@ -15,7 +15,7 @@ import java.util.Date;
 public abstract class Compte implements Serializable {
 
     @Id
-    private String numeroCompte;
+    private Long numeroCompte;
     private double solde;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -26,7 +26,7 @@ public abstract class Compte implements Serializable {
     @OneToMany(mappedBy = "compte",fetch = FetchType.LAZY)
     private Collection<Operation>  operations;
 
-    public Compte( String numeroCompte, double solde, Date dateCreation, Client client) {
+    public Compte( Long numeroCompte, double solde, Date dateCreation, Client client) {
         this.numeroCompte = numeroCompte;
         this.solde = solde;
         this.dateCreation = dateCreation;

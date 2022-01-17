@@ -31,8 +31,8 @@ public class ProxibanqueApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Client client1 = clientRepository.save(new Client(null, "Kaddouri", "ismail", "rabat", 11111, "rabat", "062444435"));
         Client client2 = clientRepository.save(new Client(null, "ProxiBanque", "Hamilton", "Casa", 15467, "Casablanca", "062626536"));
-        Compte compteCourant = compteRepository.save(new CompteCourant("NumCompte1", 5000.29, new Date(), client1, 300));
-        Compte compteEpargne = compteRepository.save(new CompteEpargne("NumCompte2", 1000, new Date(), client2, 5));
+        Compte compteCourant = compteRepository.save(new CompteCourant(55555L, 5000.29, new Date(), client1, 300));
+        Compte compteEpargne = compteRepository.save(new CompteEpargne(11L, 1000, new Date(), client2, 5));
         operationRepository.save(new Versement(null, new Date(), 4000, compteCourant));
         operationRepository.save(new Versement(null, new Date(), 5000, compteCourant));
         operationRepository.save(new Retrait(null, new Date(), 5000, compteCourant));
@@ -40,8 +40,8 @@ public class ProxibanqueApplication implements CommandLineRunner {
         operationRepository.save(new Versement(null, new Date(), 3000, compteEpargne));
         operationRepository.save(new Versement(null, new Date(), 5000, compteEpargne));
         operationRepository.save(new Retrait(null, new Date(), 5000, compteEpargne));
-        iBanqueService.crediter("NumCompte1", 6000);
-        iBanqueService.crediter("NumCompte1", 400);
+        iBanqueService.crediter(55555L, 6000);
+        iBanqueService.crediter(55555L, 400);
 
     }
 }
