@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IBanqueService {
-
+    List<Compte> listeCompte();
     Optional<Compte> consulterCompte(Long numCompte) throws CompteIntrouvable;
     void crediter(Long numCompte,double montant) throws CompteIntrouvable;
     void debiter(Long numCompte,double montant) throws DebitImpossibleException, CompteIntrouvable;
