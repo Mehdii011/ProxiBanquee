@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,7 +25,7 @@ public class BanqueServiceImpl implements IBanqueService {
 
     @Override
     public Optional<Compte> consulterCompte(Long numCompte) throws CompteIntrouvable {
-        Optional<Compte> compte =compteRepository.findById(numCompte);
+        Optional<Compte> compte = compteRepository.findById(numCompte);
         if (compte.isEmpty()) throw new CompteIntrouvable("Compte introuvable!!");
         return Optional.of(compte.get());
     }
@@ -41,10 +42,11 @@ public class BanqueServiceImpl implements IBanqueService {
 
     @Override
     public void debiter(Long numCompte, double montant) throws DebitImpossibleException, CompteIntrouvable {
-          Optional<Compte> compte = consulterCompte(numCompte);
+        Optional<Compte> compte = consulterCompte(numCompte);
         double creditCaisse = 0;
         if (compte.get() instanceof CompteCourant) creditCaisse = ((CompteCourant) compte.get()).getDecouvert();
-        if (compte.get().getSolde() + creditCaisse < montant) throw new DebitImpossibleException("Impossbile de traiter cette opération : Solde insuffisant");
+        if (compte.get().getSolde() + creditCaisse < montant)
+            throw new DebitImpossibleException("Impossbile de traiter cette opération : Solde insuffisant");
         Retrait retrait = new Retrait(null, new Date(), montant, compte.get());
         operationRepository.save(retrait);
         compte.get().setSolde(compte.get().getSolde() - montant);
@@ -63,4 +65,11 @@ public class BanqueServiceImpl implements IBanqueService {
 
         return operationRepository.operations(numCompte, PageRequest.of(page, size));
     }
+
+    @Override
+    public List<Compte> listeCompte() {
+        return compteRepository.findAll();
+    }
+
+
 }
