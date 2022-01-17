@@ -1,7 +1,11 @@
 package com.hamilton.proxibanque.dao;
 
 import com.hamilton.proxibanque.model.Compte;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface CompteRepository extends CrudRepository<Compte,Long> {
+
+@Repository
+public interface CompteRepository extends JpaRepository<Compte,Long> {
+
 }
