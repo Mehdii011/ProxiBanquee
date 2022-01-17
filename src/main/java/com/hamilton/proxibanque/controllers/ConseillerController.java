@@ -1,6 +1,7 @@
 package com.hamilton.proxibanque.controllers;
 
 import com.hamilton.proxibanque.model.Conseiller;
+import com.hamilton.proxibanque.model.Employe;
 import com.hamilton.proxibanque.services.ConseillerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,10 +31,21 @@ public class ConseillerController {
         return new ResponseEntity<>(conseiller, HttpStatus.OK);
     }
 
-    @GetMapping("/Employe/conseille/{id}")
+    @GetMapping("/Employe/conseiller/{id}")
     public ResponseEntity<?> getConseillerById(@PathVariable Long id){
         Conseiller conseiller = conseillerService.getConseillerById(id);
         return new ResponseEntity<>(conseiller, HttpStatus.OK);
+    }
+    @GetMapping("/Employe/conseiller/email/{email}")
+    public ResponseEntity<?> getConseillerByEmail(@PathVariable String email){
+        Conseiller conseiller = conseillerService.getConseillerByEmail(email);
+        return new ResponseEntity<>(conseiller, HttpStatus.OK);
+    }
+
+    @GetMapping("/Employe/conseillers")
+    public Iterable<Employe> getAllConseillers(){
+        Iterable<Employe> conseillers = conseillerService.getAllConseillers();
+        return conseillers;
     }
 
 }

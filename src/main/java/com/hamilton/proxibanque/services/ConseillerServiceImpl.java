@@ -26,4 +26,16 @@ public class ConseillerServiceImpl implements ConseillerService {
         Optional<Employe> conseiller = conseillerRepo.findById(id);
         return (Conseiller) conseiller.orElse(null);
     }
+
+    @Override
+    public Conseiller getConseillerByEmail(String email) {
+        Conseiller conseiller = conseillerRepo.findByEmail(email);
+        if (conseiller == null) return  null;
+        return conseiller;
+    }
+
+    @Override
+    public Iterable<Employe> getAllConseillers() {
+        return conseillerRepo.findAll();
+    }
 }
