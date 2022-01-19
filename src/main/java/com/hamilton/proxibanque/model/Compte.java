@@ -1,5 +1,7 @@
 package com.hamilton.proxibanque.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,8 +24,10 @@ public abstract class Compte implements Serializable {
     private Date dateCreation;
     @ManyToOne
     @JoinColumn(name="Client_Id")
+    @JsonBackReference
     private Client client;
     @OneToMany(mappedBy = "compte",fetch = FetchType.LAZY)
+    @JsonManagedReference
     private Collection<Operation>  operations;
 
     public Compte( Long numeroCompte, double solde, Date dateCreation, Client client) {

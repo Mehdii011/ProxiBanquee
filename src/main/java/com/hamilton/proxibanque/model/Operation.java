@@ -1,5 +1,6 @@
 package com.hamilton.proxibanque.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ public abstract class Operation implements Serializable {
     private double montant;
     @ManyToOne
     @JoinColumn(name = "Numero_Compte")
+    @JsonBackReference
     private Compte compte;
 
 

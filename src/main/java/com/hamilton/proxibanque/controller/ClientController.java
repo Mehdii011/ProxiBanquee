@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -25,7 +26,7 @@ public class ClientController {
     @GetMapping("/clients/{id}")
     public ResponseEntity<Client> getClientById(@PathVariable(value = "id")Long clientId)
             throws ConfigDataResourceNotFoundException {
-        Client client=clientRepository.findById(clientId).orElseThrow(()->new EntityNotFoundException("Client n'existe pas pour cet id ::" +clientId));
+        Client client=clientRepository.findById(clientId).orElseThrow(()->new EntityNotFoundException("Client n'existe pas pour cet id :" +clientId));
         return ResponseEntity.ok().body(client);
     }
 

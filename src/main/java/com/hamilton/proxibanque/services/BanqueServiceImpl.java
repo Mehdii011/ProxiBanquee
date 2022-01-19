@@ -8,6 +8,7 @@ import com.hamilton.proxibanque.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +24,21 @@ public class BanqueServiceImpl implements IBanqueService {
     @Autowired
     private CompteRepository compteRepository;
 
+
+    @Override
+    public List<Compte> listeCompte(int page,int limit) {
+        if (page>0) page-=1;
+        Pageable pageable=PageRequest.of(page,limit);
+        Page<Compte> comptePage= compteRepository.findAll(pageable);
+        List<Compte> compteList=comptePage.getContent();
+
+        return compteList;
+    }
+
     @Override
     public Optional<Compte> consulterCompte(Long numCompte) throws CompteIntrouvable {
-        Optional<Compte> compte = compteRepository.findById(numCompte);
-        if (compte.isEmpty()) throw new CompteIntrouvable("Compte introuvable!!");
+        Optional<Compte> compte =compteRepository.findById(numCompte);
+        if (compte.isEmpty()) throw new CompteIntrouvable("Ce compte n'existe pas ");
         return Optional.of(compte.get());
     }
 
@@ -42,11 +54,10 @@ public class BanqueServiceImpl implements IBanqueService {
 
     @Override
     public void debiter(Long numCompte, double montant) throws DebitImpossibleException, CompteIntrouvable {
-        Optional<Compte> compte = consulterCompte(numCompte);
+          Optional<Compte> compte = consulterCompte(numCompte);
         double creditCaisse = 0;
         if (compte.get() instanceof CompteCourant) creditCaisse = ((CompteCourant) compte.get()).getDecouvert();
-        if (compte.get().getSolde() + creditCaisse < montant)
-            throw new DebitImpossibleException("Impossbile de traiter cette opération : Solde insuffisant");
+        if (compte.get().getSolde() + creditCaisse < montant) throw new DebitImpossibleException("Impossbile de traiter cette opération : Solde insuffisant");
         Retrait retrait = new Retrait(null, new Date(), montant, compte.get());
         operationRepository.save(retrait);
         compte.get().setSolde(compte.get().getSolde() - montant);
@@ -61,15 +72,11 @@ public class BanqueServiceImpl implements IBanqueService {
     }
 
     @Override
-    public Page<Operation> operations(Long numCompte, int page, int size) {
-
-        return operationRepository.operations(numCompte, PageRequest.of(page, size));
+    public List<Operation> operations(Long numCompte, int page, int limit) {
+        if (page>0) page-=1;
+        Pageable pageable=PageRequest.of(page,limit);
+        Page<Operation> operationPage= operationRepository.findAll(pageable);
+        List<Operation> operationList=operationPage.getContent();
+        return operationList;
     }
-
-    @Override
-    public List<Compte> listeCompte() {
-        return compteRepository.findAll();
-    }
-
-
 }
