@@ -33,9 +33,15 @@ public class CompteController {
         return ResponseEntity.ok().body(compte.isPresent() ? compte.get() : null);
     }
 
-    @GetMapping("/listoperations/{numCompte}")
-    public ResponseEntity<List<Operation>> listeOperation(@PathVariable(value = "numCompte") Long compteId, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "limit", defaultValue = "5") int limit) {
-        List<Operation> operations = iBanqueService.operations(compteId, page, limit);
+    @GetMapping("/listoperations")
+    public ResponseEntity<List<Operation>> listeOperations(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "limit", defaultValue = "5") int limit) {
+        List<Operation> operations = iBanqueService.operations(page, limit);
+        return new ResponseEntity<>(operations, HttpStatus.OK);
+    }
+
+    @GetMapping("/listoperationsByCompte/{numCompte}")
+    public ResponseEntity<List<Operation>> operationsBycompte(@PathVariable(value = "numCompte") Long compteId, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "limit", defaultValue = "5") int limit) {
+        List<Operation> operations = iBanqueService.operationsByCompte(compteId, page, limit);
         return new ResponseEntity<>(operations, HttpStatus.OK);
     }
 

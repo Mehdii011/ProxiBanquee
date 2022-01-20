@@ -70,9 +70,18 @@ public class BanqueServiceImpl implements IBanqueService {
         crediter(numCompte2, montant);
 
     }
+    public List<Operation> operationsByCompte(Long numCompte, int page, int limit) {
+        if (page>0) page-=1;
+        Pageable pageable=PageRequest.of(page,limit);
+        Page<Operation> operationPage= operationRepository.operationsByCompte(numCompte,pageable);
+        List<Operation> operationListByCompte=operationPage.getContent();
+
+        return  operationListByCompte;
+
+    }
 
     @Override
-    public List<Operation> operations(Long numCompte, int page, int limit) {
+    public List<Operation> operations(int page, int limit) {
         if (page>0) page-=1;
         Pageable pageable=PageRequest.of(page,limit);
         Page<Operation> operationPage= operationRepository.findAll(pageable);

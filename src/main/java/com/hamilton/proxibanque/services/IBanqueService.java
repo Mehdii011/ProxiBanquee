@@ -14,7 +14,8 @@ public interface IBanqueService {
     void crediter(Long numCompte,double montant) throws CompteIntrouvable;
     void debiter(Long numCompte,double montant) throws DebitImpossibleException, CompteIntrouvable;
     void virement(Long numCompte1,Long numCompte2,double montant) throws DebitImpossibleException, CompteIntrouvable;
-    List<Operation> operations(Long numCompte, int page, int size);
+    List<Operation> operations(int page, int limit);
+    List<Operation> operationsByCompte(Long numCompte,int page, int limit);
 
 
 
