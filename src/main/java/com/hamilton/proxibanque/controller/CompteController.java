@@ -47,13 +47,13 @@ public class CompteController {
     }
 
     @PostMapping("/saveRetrait")
-    public ResponseEntity<Operation> saveOperation(@RequestBody Operation operation) throws CompteIntrouvable, DebitImpossibleException {
+    public ResponseEntity<Operation> saveRetrait(@RequestBody Operation operation) throws CompteIntrouvable, DebitImpossibleException {
         iBanqueService.debiter(operation.getCompte().getNumeroCompte(), operation.getMontant());
         return ResponseEntity.ok(operation);
     }
 
     @PostMapping("/saveVirement")
-    public ResponseEntity<Operation> saveOperation(@RequestBody Operation operation, @RequestBody Long numCompte2) throws CompteIntrouvable, DebitImpossibleException {
+    public ResponseEntity<Operation> saveVirement(@RequestBody Operation operation, @RequestBody Long numCompte2) throws CompteIntrouvable, DebitImpossibleException {
         try {
             Optional<Compte> compte = iBanqueService.consulterCompte(numCompte2);
             if (compte.isEmpty()) {
