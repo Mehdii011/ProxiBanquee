@@ -36,7 +36,7 @@ public class ConseillerController {
         Conseiller conseiller = conseillerService.getConseillerById(id);
         return new ResponseEntity<>(conseiller, HttpStatus.OK);
     }
-    @GetMapping("/Employe/conseiller/email/{email}")
+    @GetMapping("/Employe/conseiller/{email}")
     public ResponseEntity<?> getConseillerByEmail(@PathVariable String email){
         Conseiller conseiller = conseillerService.getConseillerByEmail(email);
         return new ResponseEntity<>(conseiller, HttpStatus.OK);
