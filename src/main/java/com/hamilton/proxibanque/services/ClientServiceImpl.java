@@ -29,4 +29,25 @@ public class ClientServiceImpl implements ClientService {
 
         return Optional.of(client.get());
     }
+     @Override
+    public Client createclient(Client client) {
+        log.info("client saved  with success {}", client);
+
+        return  clientRepository.save(client);
+    }
+
+    @Override
+    public void editclient(Client client) {
+        clientRepository.save(client);
+        log.info("client updated  with success {}", client.getId());
+    }
+
+
+
+    @Override
+    public void destroyclient(Long id) {
+        clientRepository.deleteById(id);
+        log.info("client deleted with success {}", id);
+    }
+
 }

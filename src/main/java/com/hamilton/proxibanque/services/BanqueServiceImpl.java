@@ -43,18 +43,19 @@ public class BanqueServiceImpl implements IBanqueService {
     }
 
     @Override
-    public void crediter(Long numCompte, double montant) throws CompteIntrouvable {
+    public Versement crediter(Long numCompte, double montant) throws CompteIntrouvable {
         Optional<Compte> compte = consulterCompte(numCompte);
         Versement versement = new Versement(null, new Date(), montant, compte.get());
         operationRepository.save(versement);
         compte.get().setSolde(compte.get().getSolde() + montant);
         compteRepository.save(compte.get());
+        return versement;
 
     }
 
     @Override
-    public void debiter(Long numCompte, double montant) throws DebitImpossibleException, CompteIntrouvable {
-          Optional<Compte> compte = consulterCompte(numCompte);
+    public Retrait debiter(Long numCompte, double montant) throws DebitImpossibleException, CompteIntrouvable {
+        Optional<Compte> compte = consulterCompte(numCompte);
         double creditCaisse = 0;
         if (compte.get() instanceof CompteCourant) creditCaisse = ((CompteCourant) compte.get()).getDecouvert();
         if (compte.get().getSolde() + creditCaisse < montant) throw new DebitImpossibleException("Impossbile de traiter cette opération : Solde insuffisant");
@@ -62,6 +63,7 @@ public class BanqueServiceImpl implements IBanqueService {
         operationRepository.save(retrait);
         compte.get().setSolde(compte.get().getSolde() - montant);
         compteRepository.save(compte.get());
+        return retrait;
     }
 
     @Override

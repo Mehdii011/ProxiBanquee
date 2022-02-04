@@ -1,5 +1,6 @@
 package com.hamilton.proxibanque.controller;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.hamilton.proxibanque.dao.CompteRepository;
 import com.hamilton.proxibanque.dao.ClientRepository;
 import com.hamilton.proxibanque.exception.CompteIntrouvable;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.*;
 import com.hamilton.proxibanque.services.ClientServiceImpl;
 import com.hamilton.proxibanque.services.CompteServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
+//import org.modelmapper.ModelMapper;
+//import org.modelmapper.TypeMap;
 import java.net.http.HttpClient;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,32 +66,39 @@ public class CompteController {
     }
 
     @PostMapping("/saveVersement")
-    public ResponseEntity<Operation> saveVersement(@RequestBody Operation operation) throws CompteIntrouvable {
-        iBanqueService.crediter(operation.getCompte().getNumeroCompte(), operation.getMontant());
+    public ResponseEntity<Versement> saveVersement(@RequestBody ObjectNode jsonNodes) throws CompteIntrouvable {
+        Long numCompte = jsonNodes.get("numeroCompte").asLong();
+        double montant = jsonNodes.get("montant").asDouble();
+        return ResponseEntity.ok(iBanqueService.crediter(numCompte, montant));
 
-        return ResponseEntity.ok(operation);
     }
 
     @PostMapping("/saveRetrait")
-    public ResponseEntity<Operation> saveRetrait(@RequestBody Operation operation) throws CompteIntrouvable, DebitImpossibleException {
-        iBanqueService.debiter(operation.getCompte().getNumeroCompte(), operation.getMontant());
-        return ResponseEntity.ok(operation);
+    public ResponseEntity<Retrait> saveRetrait(@RequestBody ObjectNode jsonNodes) throws CompteIntrouvable, DebitImpossibleException {
+        Long numCompte = jsonNodes.get("numeroCompte").asLong();
+        double montant = jsonNodes.get("montant").asDouble();
+
+        return ResponseEntity.ok(iBanqueService.debiter(numCompte, montant));
     }
 
     @PostMapping("/saveVirement")
-    public ResponseEntity<Operation> saveVirement(@RequestBody Operation operation, @RequestBody Long numCompte2) throws CompteIntrouvable, DebitImpossibleException {
-        try {
-            Optional<Compte> compte = iBanqueService.consulterCompte(numCompte2);
-            if (compte.isEmpty()) {
-                throw new CompteIntrouvable("Transaction Impossible : Compte bénéficiaire n'existe pas");
-            }
-            iBanqueService.virement(operation.getCompte().getNumeroCompte(), numCompte2, operation.getMontant());
+    public ResponseEntity<String> saveVirement(@RequestBody ObjectNode jsonNodes) throws CompteIntrouvable, DebitImpossibleException {
+        Long numCompte = jsonNodes.get("numeroCompte").asLong();
+        Long numCompte2 = jsonNodes.get("numeroCompte2").asLong();
+        double montant = jsonNodes.get("montant").asDouble();
+        Optional<Compte> compte = iBanqueService.consulterCompte(numCompte2);
+        iBanqueService.virement(numCompte, numCompte2, montant);
+        LocalDateTime myDateObj = LocalDateTime.now();
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String formattedDate = myDateObj.format(myFormatObj);
+        return ResponseEntity.ok("Virement : " +
+                "date Operation ='" + formattedDate + '\'' +
+                ", CompteDébiter  ='" + numCompte + '\'' +
+                ", CompteCrédite ='" + numCompte2 + '\'' +
+                ", montant='" + montant + '\'' +
 
-            return ResponseEntity.ok(operation);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+                "");
 
-        }
 
     }
 

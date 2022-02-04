@@ -14,13 +14,6 @@ public interface ICompteService {
 
 
 
-
-
-
-
-
-
-
     void editcompte(Compte compte) ;
 
     void destroycompte(Long numCompte) ;
