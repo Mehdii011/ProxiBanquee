@@ -1,26 +1,43 @@
 package com.hamilton.proxibanque.controller;
 
 import com.hamilton.proxibanque.dao.CompteRepository;
+import com.hamilton.proxibanque.dao.ClientRepository;
 import com.hamilton.proxibanque.exception.CompteIntrouvable;
 import com.hamilton.proxibanque.exception.DebitImpossibleException;
+import com.hamilton.proxibanque.exception.AddCompteImpossible;
 import com.hamilton.proxibanque.model.Compte;
 import com.hamilton.proxibanque.model.Operation;
+import com.hamilton.proxibanque.model.*;
 import com.hamilton.proxibanque.services.IBanqueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import com.hamilton.proxibanque.services.ClientServiceImpl;
+import com.hamilton.proxibanque.services.CompteServiceImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import java.net.http.HttpClient;
 import java.util.List;
 import java.util.Optional;
 
+
+@Slf4j
 @RestController
 public class CompteController {
 
     @Autowired
     private IBanqueService iBanqueService;
-
+    @Autowired
+    private CompteRepository compteRepository;
+    @Autowired
+    private ClientRepository clientRepository;
+    @Autowired
+    private CompteServiceImpl compteService;
+    @Autowired
+    private ClientServiceImpl clientService;
+   
     @GetMapping("/listcomptes")
     public ResponseEntity<List<Compte>> listeCompte(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "limit", defaultValue = "5") int limit) {
         List<Compte> comptes = iBanqueService.listeCompte(page, limit);
@@ -73,6 +90,51 @@ public class CompteController {
 
         }
 
+    }
+
+     @PostMapping("/compteEpargne")
+    public void createcompteEpargne(@RequestBody CompteEpargne compte,@RequestParam Long id) throws AddCompteImpossible {
+
+        if(id != 0){
+        Optional<Client> rep = clientRepository.findById(id);
+            if (rep.isPresent() ) {
+                if (rep.get().getComptes().size() < 2) {
+                    Client client = rep.get();
+                    compte.setClient(client);
+                    ResponseEntity<CompteEpargne> ca = new ResponseEntity(compteService.createcompteEpargne(compte), HttpStatus.CREATED);
+                }else{
+                    log.info("ce client a deja deux compte",rep);
+                    throw new AddCompteImpossible("vous avez déjà deux comptes!!");
+                }
+            }
+        }else{
+            if (compte.getClient().getComptes().size() < 2) {
+                ResponseEntity<CompteEpargne> ca = new ResponseEntity(compteService.createcompteEpargne(compte), HttpStatus.CREATED);
+            }else{
+                throw new AddCompteImpossible("vous avez déjà deux comptes!!");
+            }
+        }
+
+    }
+
+      @PostMapping("/compteCourant")
+
+    public void createcompteCourant(@RequestBody CompteCourant compte) throws AddCompteImpossible{
+
+        Client client = compte.getClient();
+       // return new ResponseEntity<>(compteService.createcompteCourant(compte), HttpStatus.CREATED);
+        Optional<Client> rep = clientRepository.findById(client.getId());
+
+        if(rep.isPresent()) {
+            if (rep.get().getComptes().size() < 2) {
+                ResponseEntity<CompteCourant> cc =new ResponseEntity(compteService.createcompteCourant(compte), HttpStatus.CREATED);
+            } else {
+                throw new AddCompteImpossible("vous avez déjà deux comptes!!");
+            }
+        }else{
+            ResponseEntity<CompteCourant> cc =new ResponseEntity(compteService.createcompteCourant(compte), HttpStatus.CREATED);
+
+        }
     }
 
 }
