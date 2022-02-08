@@ -2,9 +2,7 @@ package com.hamilton.proxibanque.services;
 
 import com.hamilton.proxibanque.dao.ClientRepository;
 import com.hamilton.proxibanque.exception.ClientIntrouvable;
-import com.hamilton.proxibanque.exception.CompteIntrouvable;
 import com.hamilton.proxibanque.model.Client;
-import com.hamilton.proxibanque.model.Compte;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +31,7 @@ public class ClientServiceImpl implements ClientService {
     }
      @Override
     public Client createclient(Client client) {
-        //log.info("client saved  with success {}", client);
+      //  log.info("client saved  with success {}", client);
 
         return  clientRepository.save(client);
     }
@@ -41,7 +39,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void editclient(Client client) {
         clientRepository.save(client);
-        //log.info("client updated  with success {}", client.getId());
+       // log.info("client updated  with success {}", client.getId());
     }
 
 
@@ -49,15 +47,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void destroyclient(Long id) {
         clientRepository.deleteById(id);
-        //log.info("client deleted with success {}", id);
-    }
-
-    @Override
-    public List<Client> ClientByConseillerId(Long conseillerid) throws ClientIntrouvable {
-        List<Client> client =clientRepository.findByEmployeId(conseillerid);
-        if (client.isEmpty()) throw new ClientIntrouvable("Client introuvable!!");
-
-        return client;
+       // log.info("client deleted with success {}", id);
     }
 
 }

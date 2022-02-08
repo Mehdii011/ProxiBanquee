@@ -38,7 +38,7 @@ public class BanqueServiceImpl implements IBanqueService {
     @Override
     public Optional<Compte> consulterCompte(Long numCompte) throws CompteIntrouvable {
         Optional<Compte> compte =compteRepository.findById(numCompte);
-        if (compte.isEmpty()) throw new CompteIntrouvable("Ce compte n'existe pas ");
+        if (compte.isEmpty()) throw new CompteIntrouvable("Ce compte n'existe pas:  "+numCompte);
         return Optional.of(compte.get());
     }
 
