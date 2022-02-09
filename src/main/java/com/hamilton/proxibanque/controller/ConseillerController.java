@@ -20,7 +20,7 @@ public class ConseillerController {
 //    @Autowired
 //    private PasswordEncoder passwordEncoder;
 
-    @PostMapping("Employe/createConseiller")
+    @PostMapping("/Employe/createConseiller")
     public ResponseEntity<?> createConseiller(@Valid @RequestBody Conseiller conseiller){
 //        conseiller.setPassword(passwordEncoder.encode(conseiller.getPassword()));
         try{

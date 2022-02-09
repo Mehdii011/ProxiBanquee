@@ -35,7 +35,7 @@ public class ClientController {
         return ResponseEntity.ok().body(client);
     }
     @PostMapping("/client")
-    public ResponseEntity<Client> createclient( Client client) {
+    public ResponseEntity<Client> createclient(@RequestBody Client client) {
         return new ResponseEntity<Client>(clientService.createclient(client), HttpStatus.CREATED);
     }
 
