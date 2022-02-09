@@ -21,17 +21,17 @@ public class Client implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "Ce champ ne doit pas être null !")
-    @Size(min = 3,message = "Ce champ doit avoir au moins 3 caractères !")
+  //  @NotBlank(message = "Ce champ ne doit pas être null !")
+  //  @Size(min = 3,message = "Ce champ doit avoir au moins 3 caractères !")
     private String nom;
-    @NotBlank(message = "Ce champ ne doit pas être null !")
-    @Size(min = 3,message = "Ce champ doit avoir au moins 3 caractères !")
+  //  @NotBlank(message = "Ce champ ne doit pas être null !")
+  //  @Size(min = 3,message = "Ce champ doit avoir au moins 3 caractères !")
     private String prenom;
     private String adresse;
     private int codePostal;
-    @NotBlank(message = "Ce champ ne doit pas être null !")
+   // @NotBlank(message = "Ce champ ne doit pas être null !")
     private String Ville;
-    @NotBlank(message = "Ce champ ne doit pas être null !")
+  //  @NotBlank(message = "Ce champ ne doit pas être null !")
     private String telephone;
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference

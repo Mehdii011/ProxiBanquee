@@ -9,6 +9,7 @@ import com.hamilton.proxibanque.model.Employe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -22,6 +23,13 @@ public class ConseillerServiceImpl implements ConseillerService {
     public Conseiller createConseiller(Conseiller conseiller) throws EmailExistException{
         if (conseillerRepo.findByEmail(conseiller.getEmail())!= null)
             throw new EmailExistException("Conseiller Existe déjà !!");
+
+      /*  for(int i=0;i<conseiller.getClients().size();i++){
+
+            Client client=conseiller.getClients().iterator().next();
+            client.setEmploye(conseiller);
+
+        }*/
         return conseillerRepo.save(conseiller);
     }
 

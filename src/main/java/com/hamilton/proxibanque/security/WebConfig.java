@@ -26,9 +26,10 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
        http.authorizeRequests().antMatchers(HttpMethod.GET,"/clients").permitAll() ;
-      //  http.authorizeRequests().antMatchers(HttpMethod.GET,"/aa/**").permitAll() ;
-      //  http.authorizeRequests().antMatchers(HttpMethod.PATCH,"/aa/**").permitAll() ;
-      //  http.authorizeRequests().antMatchers(HttpMethod.GET,"/aa/**").permitAll() ;
+       http.authorizeRequests().antMatchers(HttpMethod.GET,"/compteClient/**").permitAll() ;
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/Employe/conseillers").permitAll() ;
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/saveRetrait").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/Employe/createConseiller/**").permitAll() ;
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/saveRetrait").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/saveVersement").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/saveVirement").permitAll();

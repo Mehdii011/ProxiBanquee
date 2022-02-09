@@ -31,8 +31,8 @@ public abstract class Employe implements Serializable {
     @Column(unique = true)
     private String login;
     @NotBlank(message = "Ce champ ne doit pas être null")
-    @Size(min=8,message = "mot de passe doit avoir au moins 8 caractères ! ")
-    @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$\n",message ="Ce mot de passe doit contenir au minimum 8 caractères, à savoir : au moins une lettre minuscule et une lettre majuscule, un caractère spécial et un chiffre")
+  //  @Size(min=8,message = "mot de passe doit avoir au moins 8 caractères ! ")
+   // @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$\n",message ="Ce mot de passe doit contenir au minimum 8 caractères, à savoir : au moins une lettre minuscule et une lettre majuscule, un caractère spécial et un chiffre")
     private String password;
     @OneToMany(mappedBy = "employe",fetch = FetchType.LAZY)
     @JsonManagedReference
