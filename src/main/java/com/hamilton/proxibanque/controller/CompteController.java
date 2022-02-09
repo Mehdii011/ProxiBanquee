@@ -86,23 +86,16 @@ public class CompteController {
         return ResponseEntity.ok(iBanqueService.debiter(numCompte, montant));
     }
 
-    @PostMapping("/saveVirement")
-    public ResponseEntity<String> saveVirement(@RequestBody ObjectNode jsonNodes) throws CompteIntrouvable, DebitImpossibleException {
+
+    @PostMapping(value = "/saveVirement")
+    public  ResponseEntity saveVirement(@RequestBody ObjectNode jsonNodes) throws CompteIntrouvable, DebitImpossibleException {
         Long numCompte = jsonNodes.get("numeroCompte").asLong();
         Long numCompte2 = jsonNodes.get("numeroCompte2").asLong();
         double montant = jsonNodes.get("montant").asDouble();
-        Optional<Compte> compte = iBanqueService.consulterCompte(numCompte2);
+        iBanqueService.consulterCompte(numCompte2);
         iBanqueService.virement(numCompte, numCompte2, montant);
-        LocalDateTime myDateObj = LocalDateTime.now();
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String formattedDate = myDateObj.format(myFormatObj);
-        return ResponseEntity.ok("Virement : " +
-                "date Operation ='" + formattedDate + '\'' +
-                ", CompteDébiter  ='" + numCompte + '\'' +
-                ", CompteCrédite ='" + numCompte2 + '\'' +
-                ", montant='" + montant + '\'' +
 
-                "");
+        return ResponseEntity.ok(jsonNodes);
 
 
     }
