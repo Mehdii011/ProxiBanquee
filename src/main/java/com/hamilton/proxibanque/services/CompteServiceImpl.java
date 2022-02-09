@@ -5,6 +5,7 @@ import com.hamilton.proxibanque.model.Compte;
 import com.hamilton.proxibanque.model.CompteCourant;
 import com.hamilton.proxibanque.model.CompteEpargne;
 import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.XSlf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +23,12 @@ public class CompteServiceImpl implements ICompteService{
     @Override
     public Compte createcompteCourant(CompteCourant compte) {
       return  compteRepository.save(compte);
-        //log.info("compte saved  with success {}", compte.getNumeroCompte());
+      //  log.info("compte saved  with success {}", compte.getNumeroCompte());
     }
     @Override
     public Compte createcompteEpargne(CompteEpargne compte) {
        return compteRepository.save(compte);
-      //  log.info("compte saved  with success {}", compte.getNumeroCompte());
+       //log.info("compte saved  with success {}", compte.getNumeroCompte());
     }
 
     @Override

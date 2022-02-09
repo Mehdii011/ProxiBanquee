@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import java.util.Collection;
 import java.util.Date;
 @Entity
 @DiscriminatorValue("Compte Epargne")

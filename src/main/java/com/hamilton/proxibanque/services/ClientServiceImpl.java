@@ -31,7 +31,7 @@ public class ClientServiceImpl implements ClientService {
     }
      @Override
     public Client createclient(Client client) {
-        log.info("client saved  with success {}", client);
+       // log.info("client saved  with success {}", client);
 
         return  clientRepository.save(client);
     }
@@ -39,7 +39,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void editclient(Client client) {
         clientRepository.save(client);
-        log.info("client updated  with success {}", client.getId());
+       // log.info("client updated  with success {}", client.getId());
     }
 
 
@@ -47,7 +47,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void destroyclient(Long id) {
         clientRepository.deleteById(id);
-        log.info("client deleted with success {}", id);
+      //  log.info("client deleted with success {}", id);
     }
 
 }

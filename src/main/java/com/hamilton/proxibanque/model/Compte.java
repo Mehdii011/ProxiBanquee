@@ -16,7 +16,8 @@ import java.util.Date;
 @Data @NoArgsConstructor
 public abstract class Compte implements Serializable {
 
-    @Id
+
+@Id
     private Long numeroCompte;
     private double solde;
     @Temporal(TemporalType.DATE)

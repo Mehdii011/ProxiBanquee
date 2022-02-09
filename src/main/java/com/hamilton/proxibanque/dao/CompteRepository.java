@@ -7,5 +7,6 @@ import java.util.List;
 
 @Repository
 public interface CompteRepository extends PagingAndSortingRepository<Compte,Long> {
- public List<Compte> findAll();
+  List<Compte> findAll();
+  List<Compte> findByClientId(Long clientId);
 }

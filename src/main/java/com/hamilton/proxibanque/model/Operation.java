@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import java.util.Date;
 public abstract class Operation implements Serializable {
 @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idOperation;
+
     private Date dateOperation;
     private double montant;
     @ManyToOne

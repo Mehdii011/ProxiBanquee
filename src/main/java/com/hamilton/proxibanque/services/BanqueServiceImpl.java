@@ -83,6 +83,13 @@ public class BanqueServiceImpl implements IBanqueService {
     }
 
     @Override
+    public List<Compte> listeCompteByClientId(Long clientid) throws CompteIntrouvable {
+        List<Compte> compte =compteRepository.findByClientId(clientid);
+if(compte.isEmpty()) throw new CompteIntrouvable("le compte de client spécifé n'existe pas ! ");
+        return compte;
+    }
+
+    @Override
     public List<Operation> operations(int page, int limit) {
         if (page>0) page-=1;
         Pageable pageable=PageRequest.of(page,limit);

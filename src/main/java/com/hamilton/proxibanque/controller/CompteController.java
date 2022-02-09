@@ -46,6 +46,11 @@ public class CompteController {
         List<Compte> comptes = iBanqueService.listeCompte(page, limit);
         return new ResponseEntity<>(comptes, HttpStatus.OK);
     }
+    @GetMapping("/compteClient/{clientId}")
+    public ResponseEntity<List<Compte>> clientCompte(@PathVariable(value = "clientId") Long clientId) throws CompteIntrouvable {
+        List<Compte> comptes=iBanqueService.listeCompteByClientId(clientId);
+        return ResponseEntity.ok(comptes);
+    }
 
     @GetMapping("/comptes/{numCompte}")
     public ResponseEntity<Compte> getCompteById(@PathVariable(value = "numCompte") Long compteId) throws CompteIntrouvable {
