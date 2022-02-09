@@ -47,5 +47,20 @@ public class ConseillerController {
         Iterable<Employe> conseillers = conseillerService.getAllConseillers();
         return conseillers;
     }
+    @GetMapping("/delete/{id}")
+    public Employe delete(@PathVariable("id") Long id) {
+        return conseillerService.deleteById(id);
+    }
+    @PutMapping("/updateConseiller")
+    public ResponseEntity<Conseiller> UpdateCar(@RequestBody Conseiller newConseiller) {
+        Conseiller conseiller = conseillerService.update(newConseiller);
+        return new ResponseEntity<>(conseiller, HttpStatus.OK);
+    }
+    @PutMapping(value = "/affectation/{idcons}/{idclient}")
+    @ResponseBody
+    public void affectationConseillerClient(@PathVariable("idcons") Long conseiller_id,@PathVariable ("idclient") Long client_id){
+        conseillerService.affectationConseillerClient(conseiller_id,client_id);
+    }
+
 
 }
