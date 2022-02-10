@@ -50,4 +50,9 @@ public class ClientServiceImpl implements ClientService {
        // log.info("client deleted with success {}", id);
     }
 
+    @Override
+    public List<Client> ClientByConseillerId(Long conseillerid) throws ClientIntrouvable {
+        return null;
+    }
+
 }
