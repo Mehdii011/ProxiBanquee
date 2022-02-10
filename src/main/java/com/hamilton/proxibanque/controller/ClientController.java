@@ -1,6 +1,7 @@
 package com.hamilton.proxibanque.controller;
 
 import com.hamilton.proxibanque.dao.ClientRepository;
+import com.hamilton.proxibanque.exception.ClientIntrouvable;
 import com.hamilton.proxibanque.model.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
@@ -10,9 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import com.hamilton.proxibanque.services.ClientServiceImpl;
 import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +37,11 @@ public class ClientController {
     @PostMapping("/client")
     public ResponseEntity<Client> createclient(@RequestBody Client client) {
         return new ResponseEntity<Client>(clientService.createclient(client), HttpStatus.CREATED);
+    }
+    @GetMapping("clientByConseillerId/{conseillerId}")
+    public ResponseEntity<List<Client>> clientByConseillerId(@PathVariable(value = "conseillerId") Long id) throws ClientIntrouvable {
+        List<Client> clients=clientService.ClientByConseillerId(id);
+        return ResponseEntity.ok(clients);
     }
 
     @GetMapping("/destroyclient")
