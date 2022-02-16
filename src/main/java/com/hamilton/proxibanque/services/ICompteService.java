@@ -14,7 +14,9 @@ public interface ICompteService {
     void editcompte(Compte compte) ;
     void destroycompte(Long numCompte) ;
 
+    Compte update(Compte newCompte, Long numeroCompte);
 
+    void editcomptecourant(CompteCourant compte);
 
-
+    void editcompteEpargne(CompteEpargne compte);
 }

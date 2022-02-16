@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IBanqueService {
-    List<Compte> listeCompte(int page,int limit);
+    List<Compte> listeCompte();
     Optional<Compte> consulterCompte(Long numCompte) throws CompteIntrouvable;
     Versement crediter(Long numCompte, double montant) throws CompteIntrouvable;
     Retrait debiter(Long numCompte, double montant) throws DebitImpossibleException, CompteIntrouvable;

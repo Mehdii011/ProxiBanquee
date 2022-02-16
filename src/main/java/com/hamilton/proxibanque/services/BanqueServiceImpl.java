@@ -26,13 +26,10 @@ public class BanqueServiceImpl implements IBanqueService {
 
 
     @Override
-    public List<Compte> listeCompte(int page,int limit) {
-        if (page>0) page-=1;
-        Pageable pageable=PageRequest.of(page,limit);
-        Page<Compte> comptePage= compteRepository.findAll(pageable);
-        List<Compte> compteList=comptePage.getContent();
+    public List<Compte> listeCompte() {
+        List<Compte> comptePage= compteRepository.findAll();
 
-        return compteList;
+        return comptePage;
     }
 
     @Override

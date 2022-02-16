@@ -42,8 +42,8 @@ public class CompteController {
     private ClientServiceImpl clientService;
    
     @GetMapping("/listcomptes")
-    public ResponseEntity<List<Compte>> listeCompte(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "limit", defaultValue = "5") int limit) {
-        List<Compte> comptes = iBanqueService.listeCompte(page, limit);
+    public ResponseEntity<List<Compte>> listeCompte() {
+        List<Compte> comptes = iBanqueService.listeCompte();
         return new ResponseEntity<>(comptes, HttpStatus.OK);
     }
     @GetMapping("/compteClient/{clientId}")
@@ -86,16 +86,23 @@ public class CompteController {
         return ResponseEntity.ok(iBanqueService.debiter(numCompte, montant));
     }
 
-
-    @PostMapping(value = "/saveVirement")
-    public  ResponseEntity saveVirement(@RequestBody ObjectNode jsonNodes) throws CompteIntrouvable, DebitImpossibleException {
+    @PostMapping("/saveVirement")
+    public ResponseEntity<String> saveVirement(@RequestBody ObjectNode jsonNodes) throws CompteIntrouvable, DebitImpossibleException {
         Long numCompte = jsonNodes.get("numeroCompte").asLong();
         Long numCompte2 = jsonNodes.get("numeroCompte2").asLong();
         double montant = jsonNodes.get("montant").asDouble();
-        iBanqueService.consulterCompte(numCompte2);
+        Optional<Compte> compte = iBanqueService.consulterCompte(numCompte2);
         iBanqueService.virement(numCompte, numCompte2, montant);
+        LocalDateTime myDateObj = LocalDateTime.now();
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String formattedDate = myDateObj.format(myFormatObj);
+        return ResponseEntity.ok("Virement : " +
+                "date Operation ='" + formattedDate + '\'' +
+                ", CompteDébiter  ='" + numCompte + '\'' +
+                ", CompteCrédite ='" + numCompte2 + '\'' +
+                ", montant='" + montant + '\'' +
 
-        return ResponseEntity.ok(jsonNodes);
+                "");
 
 
     }

@@ -45,5 +45,36 @@ public class CompteServiceImpl implements ICompteService{
         log.info("compte deleted with success {}", numCompte);
     }
 
+    @Override
+    public Compte update(Compte newCompte, Long numeroCompte) {
+       Compte compte= compteRepository.findCompteByNumeroCompte(numeroCompte);
+       compte.setNumeroCompte(newCompte.getNumeroCompte());
+       compte.setSolde(newCompte.getSolde());
+       compte.setClient(newCompte.getClient());
+       return compteRepository.save(compte);
+    }
+    @Override
+    public void editcomptecourant(CompteCourant compte) {
+          Long id1=compte.getNumeroCompte();
+       CompteCourant compte1=(CompteCourant) compteRepository.findCompteByNumeroCompte(id1);
+        compte1.setNumeroCompte(compte.getNumeroCompte());
+        compte1.setSolde(compte.getSolde());
+        compte1.setDateCreation(compte.getDateCreation());
+        compte1.setDecouvert(compte.getDecouvert());
+        compteRepository.save(compte1);
+        log.info("compte saved  with success {}", compte.getNumeroCompte());
+    }
+    @Override
+    public void editcompteEpargne(CompteEpargne compte) {
+        Long id1=compte.getNumeroCompte();
+        CompteEpargne compte1=(CompteEpargne) compteRepository.findCompteByNumeroCompte(id1);
+        compte1.setNumeroCompte(compte.getNumeroCompte());
+        compte1.setSolde(compte.getSolde());
+        compte1.setDateCreation(compte.getDateCreation());
+        compte1.setTaux(compte.getTaux());
+        compteRepository.save(compte1);
+        log.info("compte saved  with success {}", compte.getNumeroCompte());
+    }
+
 
 }

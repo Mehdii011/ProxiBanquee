@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import com.hamilton.proxibanque.services.ClientServiceImpl;
 import javax.persistence.EntityNotFoundException;
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -38,21 +39,22 @@ public class ClientController {
     public ResponseEntity<Client> createclient(@RequestBody Client client) {
         return new ResponseEntity<Client>(clientService.createclient(client), HttpStatus.CREATED);
     }
-    @GetMapping("clientByConseillerId/{conseillerId}")
+    @GetMapping("/clientByConseillerId/{conseillerId}")
     public ResponseEntity<List<Client>> clientByConseillerId(@PathVariable(value = "conseillerId") Long id) throws ClientIntrouvable {
         List<Client> clients=clientService.ClientByConseillerId(id);
         return ResponseEntity.ok(clients);
     }
 
-    @GetMapping("/destroyclient")
-    public ResponseEntity<Long> destroyclient(Long id) {
+    @GetMapping("/destroyclient/{id}")
+    public ResponseEntity<Long> destroyclient(@PathVariable("id") Long id) {
+   //     log.info("client deleted with success {}", id);
         clientService.destroyclient(id);
         return ResponseEntity.ok().body(id);
     }
-    @GetMapping("/editclient")
-    public ResponseEntity<Client> editclient(Client client) {
+    @PutMapping("/editclient")
+    public ResponseEntity<Client> editclient( @RequestBody Client client) {
         clientService.editclient(client);
-        return ResponseEntity.ok().body(client);
+        return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
 }

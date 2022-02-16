@@ -9,4 +9,5 @@ import java.util.List;
 public interface CompteRepository extends PagingAndSortingRepository<Compte,Long> {
   List<Compte> findAll();
   List<Compte> findByClientId(Long clientId);
+  Compte findCompteByNumeroCompte(Long id);
 }

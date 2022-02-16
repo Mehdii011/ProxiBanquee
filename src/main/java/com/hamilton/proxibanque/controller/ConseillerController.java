@@ -31,7 +31,7 @@ public class ConseillerController {
         return new ResponseEntity<>(conseiller, HttpStatus.OK);
     }
 
-    @GetMapping("/Employe/conseiller/{id}")
+    @GetMapping("/Employe/conseillerById/{id}")
     public ResponseEntity<?> getConseillerById(@PathVariable Long id){
         Conseiller conseiller = conseillerService.getConseillerById(id);
         return new ResponseEntity<>(conseiller, HttpStatus.OK);
@@ -54,7 +54,7 @@ public class ConseillerController {
     @PutMapping("/updateConseiller")
     public ResponseEntity<Conseiller> UpdateCar(@RequestBody Conseiller newConseiller) {
         Conseiller conseiller = conseillerService.update(newConseiller);
-        return new ResponseEntity<>(conseiller, HttpStatus.OK);
+        return new ResponseEntity<Conseiller>(conseiller, HttpStatus.OK);
     }
     @PutMapping(value = "/affectation/{idcons}/{idclient}")
     @ResponseBody

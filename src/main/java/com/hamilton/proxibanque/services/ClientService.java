@@ -1,9 +1,7 @@
 package com.hamilton.proxibanque.services;
 
 import com.hamilton.proxibanque.exception.ClientIntrouvable;
-import com.hamilton.proxibanque.exception.CompteIntrouvable;
 import com.hamilton.proxibanque.model.Client;
-import com.hamilton.proxibanque.model.Compte;
 
 import java.util.List;
 import java.util.Optional;

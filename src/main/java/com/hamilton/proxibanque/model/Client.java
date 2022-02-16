@@ -49,7 +49,7 @@ public class Client implements Serializable {
         this.prenom = prenom;
         this.adresse = adresse;
         this.codePostal = codePostal;
-        Ville = ville;
+        this.Ville = ville;
         this.telephone = telephone;
     }
 }
